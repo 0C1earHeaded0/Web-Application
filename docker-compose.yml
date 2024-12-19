@@ -19,7 +19,7 @@ services:
       - 3000:3000
 
   database:
-    image: postgres
+    image: postgres 
     environment:
       - POSTGRES_PASSWORD=12345
     networks:
