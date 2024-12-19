@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/download.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Выберите дату появления персонажа в эпизоде:</h2>
+        </div>
+        <div class="inputs">
+                <label for="date_from">С <input name="date_from" type="date" id="date_from"></label>
+                <label for="date_to">По <input name="date_to" type="date" id="date_to"></label>
+        </div>
+        <div class="btn">
+                <button class="inputs submit_btn">Найти</button>
+        </div>
+    </div>
+
+    <h3 class="err hide">ДАННЫХ НЕТ</h3>
+
+    <div class="prev hide">
+        <h3 class="prev-header">Превью данных (Первые 5 строк):</h3>
+        <table id="table">
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>STATUS</th>
+                <th>SPECIES</th> 
+                <th>TYPE</th>
+                <th>GENDER</th>
+                <th>IMAGE</th>
+                <th>URL</th>
+                <th>CREATED</th>
+                <th>ORIGIN_NAME</th>
+                <th>LOCATION_NAME</th>
+            </tr>
+        </table>
+        <div class="conteiner_dbtn">
+            <input class="download_btn" type="button" value="Скачать">
+        </div>
+    </div>
+    
+    <script src="receiveData.js"></script>
+    <script src="downloadDataF.js"></script>
+</body>
+</html>
