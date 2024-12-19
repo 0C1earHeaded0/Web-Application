@@ -1,0 +1,82 @@
+services:
+
+  mainapp:
+    build: web-app/ 
+    command: npm start
+    environment:
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_HOST=173.21.0.4
+      - POSTGRES_PORT=5432
+    depends_on:
+      - database
+      - scripts
+    networks:
+      common-net:
+        ipv4_address: 172.18.1.3
+      web-app-net:
+        ipv4_address: 173.21.0.3
+    ports: 
+      - 3000:3000
+
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=12345
+    networks:
+      common-net:
+        ipv4_address: 172.18.1.4
+      web-app-net:
+        ipv4_address: 173.21.0.4
+    ports:
+      - 5432:5432
+
+  scripts:
+    build: data_parser/
+    command: python3 main.py
+    networks:
+      web-app-net:
+    environment:
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_HOST=173.21.0.4
+      - POSTGRES_PORT=5432
+    depends_on:
+      - database
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      common-net:
+        ipv4_address: 172.18.1.5
+      web-app-net:
+        ipv4_address: 173.21.0.5
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+      common-net:
+        ipv4_address: 172.18.1.6
+      web-app-net:
+        ipv4_address: 173.21.0.6
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+  
+networks:
+  common-net:
+    name: common_network
+    external: true
+  web-app-net:
+    name: web-app_netw
+    external: true
+    
